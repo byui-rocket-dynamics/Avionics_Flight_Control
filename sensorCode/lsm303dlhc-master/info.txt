@@ -1,0 +1,1 @@
+This directory is used to hold code/header/object files for running the LSM303DLHC Accellerometer 
