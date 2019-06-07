@@ -27,25 +27,37 @@
 // container can be. This is to not over fill memory.
 #define MAX_SIZE        1000
 
+// Time (in seconds) to delay checking for apogee.
+// This is to keep the rocket from blowing chutes
+// during burnout.
+#define MACH_DELAY      10
+
+// Values to signify how much of a change needs to
+// happen for the rocket to determine that it is 
+// currently launching. 
+#define ACC             20 // THIS NEEDS TO BE CHANGED TO A CORRECT VALUE
+#define ALT             20 // THIS NEEDS TO BE CHANGED TO A CORRECT VALUE
+
 // Paths to files
-#define LOG_FILE        ""
-#define SAVE_FILE       ""
-#define SUMMARY_FILE    ""
+#define LOG_FILE        "" // THIS NEEDS TO BE CHANGED TO A CORRECT VALUE
+#define SAVE_FILE       "" // THIS NEEDS TO BE CHANGED TO A CORRECT VALUE
+#define SUMMARY_FILE    "" // THIS NEEDS TO BE CHANGED TO A CORRECT VALUE
 
 //LIBRARIES
-#include <deque>        // Data structure to store flight data
 #include <queue>        // Data structure used for logging
 #include <pthread.h>    // Used for handling the creation of threads
 #include <semaphore.h>  // Used for making the program thread-safe
-#include <stdio.h>
+#include <stdio.h>      // Used for using printf() function
+#include <fstream>      // Used for reading and writting to files
 
 // Libraries for sensor data. One part is for 
 // simulating. The other is for the actual program.
 #ifdef SIMULATION
-     // Libraries that will suppliment functions called
-     //   for pi/sensor specific functions.
-     #include "./simLibs/wiringPi.h"
-     #include "./simLibs/sensorBMPSim.h"
+   // Libraries that will suppliment functions called
+   //   for pi/sensor specific functions.
+   #include "./simLibs/wiringPi.h"
+   #include "./simLibs/sensorBMPSim.h"
+   #define SIM
 #else
      #include <wiringPi.h>
      extern "C" {
@@ -81,6 +93,10 @@ struct LogInfo
    char* log;
 };
 
+/*********************************
+ * Structure used for creating a 
+ *    basic summary of the flight.
+ * *******************************/
 struct FlightSummary
 {
    int flightTime;
@@ -93,45 +109,53 @@ struct FlightSummary
 /////////////////////
 
 // Structures that need to be thread safe
-std::deque<struct FlightData> data;
-std::queue<struct LogInfo> logs;
+//    (CURRENTLY NONE)
 
 // Structures that don't need to be thread safe
+struct FlightData data;
+std::queue<struct LogInfo> logs;
+struct FlightSummary summary;
 bool inFlight;
 bool startOfFlight;
-struct FlightSummary summary;
 
 // ID's for each thread
-pthread_t dataID;
-pthread_t logID;
-pthread_t saveID;
-pthread_t flightID;
+pthread_t collectDataID;
+pthread_t sendDataID;
 
 //Semaphores to keep data thread-safe
-sem_t dataSem;
-sem_t logSem;
+//   (CURRENTLY NONE)
 
 // FUNCTIONS
 //    More info in flight.cpp
 void flightProgram();
 void init();
 void start();
+void deployDrogue();
+void deployMain();
+void land();
 
-void *getData(void* p);
-void *logData(void* p);
-void *saveData(void *p);
+void *collectData(void* p);
+void *sendData(void * p);
 void log(char *tag, char *message);
 
 void end();
 void saveSummary();
-
+void logData();
 /********************************************
  * MAIN: Main function for program
  * ******************************************/
-
+#ifdef SIM
 int main()
 {
    flightProgram();
    return 0;
 }
+#else
+int main()
+{
+   flightProgram();
+   return 0;
+}
+#endif /* #ifdef SIM */
+
 #endif /*FLIGHT_H*/
