@@ -89,20 +89,27 @@ void saveSummary()
 void *getData(void* p)
 {
    int buffer = 10;
-   struct FlightData tData;
+   struct FlightData *tData[buffer];
+   
+   for(int i = 0; i < buffer; i++)
+      tData[i] = NULL;
    
    int fd = bmpSetup(); // Used for reading from sensors
-
+   int canWrite = 0;
+   int holder = 0;
+   int i = 0;
    while(inFlight)
    {
-      // TODO: Figure out a way for function to run while
-      //       it's waiting for the semaphore
-
       // Fill up tData with sensor data
-      readACC(tData.acc);
-      readMAG(tData.mag);
-      readGYR(tData.gyr);
-      tData.alt = getAltitude(fd);
+      do{
+         readACC(tData[holder]->acc);
+         readMAG(tData[holder]->mag);
+         readGYR(tData[holder]->gyr);
+         tData[holder]->alt = getAltitude(fd);
+         holder++;
+
+         sem_getvalue(&dataSem, &canWrite);
+      }while(!canWrite && holder != buffer - 1);
 
       // Store data between sem functions. The
       //    sem functions are what make the 
@@ -110,7 +117,9 @@ void *getData(void* p)
       //    two threads editing the same info
       //    at the same time.
       sem_wait(&dataSem);
-      data.push_front(tData);
+      // TODO: Possibly make this a producer-consumer situation
+      for(i = 0; i < holder; i++)
+         data.push_front(*tData[i]);
       sem_post(&dataSem);
    }
 }
@@ -156,5 +165,6 @@ void flightProgram()
    start();
 
    // TODO: Create flight logic here
+
    end();
 }
