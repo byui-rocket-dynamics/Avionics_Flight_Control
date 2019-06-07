@@ -18,8 +18,8 @@ TYPE = LAUNCH
 sim: wiringPi.o sensorBMPSim.o flight.o
 	g++ -o sim wiringPi.o sensorBMPSim.o flight.o $(CFLAGS)
 
-# launch: main.o flight.o
-# 	g++ -o launch main.o flight.o $(CFLAGS)
+launch: main.o flight.o
+	g++ -o launch main.o flight.o $(CFLAGS)
 	 
 # FILES
 wiringPi.o: $(SIM_PATH)wiringPi.h $(SIM_PATH)wiringPi.cpp
