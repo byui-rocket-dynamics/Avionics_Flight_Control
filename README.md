@@ -4,14 +4,14 @@ The software here is made to read sensors, analyze data, and deploy the parachut
 ## What Needs To Be Done ##
 *If you complete one of these tasks, please mark it off and move it to the bottom of the list. If you are currently working on one of these, add your github username in front of the task surrounded by astrisks and remove it when it is done.*
 - [ ] Logic for deploying drogue chute
-- [ ] Logic for deploysing main chute
+- [ ] Logic for deploying main chute
 - [ ] Logic for knowing when rocket is on the ground
 - [ ] Logic for saving the data to a file in collectData()
 - [ ] Logic for saving data in the logs queue to a file in logData()
 - [ ] Logic for pushing data into the logs queue in log()
 - [ ] Logic for saving the flight summary in saveSummary()
 - [ ] Logic for updating flight summary variables (and figure out best place to do that)
-- [ ] Create simple way to test the program not on the raspberry pi (simple simulation)
+- [ ] *Amulek1416* Create simple way to test the program not on the raspberry pi (simple simulation)
 - [ ] Make logic for sending data to the ground
 - [ ] Algorithm to filter the data when going moch speeds
 - [x] Have collectData() update struct FlightData data
@@ -35,7 +35,7 @@ The software here is made to read sensors, analyze data, and deploy the parachut
        |
        v
 +------+--------+
-|flightProgram()|                 +-------------+
+|flightProgram() |                 +-------------+
 +-------+-------+                 |   THREAD    |
         |                     +-->------------------+
         |                     |   |collectData()|   |
