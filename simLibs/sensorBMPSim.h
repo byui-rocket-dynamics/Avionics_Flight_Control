@@ -13,6 +13,94 @@
  *       sumulate a flight.
  * *********************************************/
 
+#include <queue>
+#include <fstream>
+#include <string>
+#include <sstream>
+
+/**********************************************
+* DATA_POINT: Simple class to hold data points
+***********************************************/
+class DataPoint
+{
+private:
+   int time;
+   int *gyr;
+   int *acc;
+   int *mag;
+   double *temp;
+   float alt;
+public:
+   DataPoint(int time, int *gyr, 
+      int *acc, int *mag, double* temp, float alt)
+   {
+      this->time  = time;
+      this->gyr   = gyr;
+      this->acc   = acc;
+      this->mag   = mag;
+      this->alt   = alt;
+      this->temp  = temp;
+   }
+   int getTime()     { return this->time; }
+   int* getGYR()     { return this->gyr;  }
+   int* getACC()     { return this->acc;  }
+   int* getMAG()     { return this->mag;  }
+   float getALT()    { return this->alt;  }
+   double* getTEMP() { return this->temp; }
+};
+
+class SimData
+{
+private:
+   std::queue<int> time;
+   std::queue<int*> gyr;
+   std::queue<int*> acc;
+   std::queue<int*> mag;
+   std::queue<double*> temp; 
+   std::queue<float> alt;
+public:
+   void load(DataPoint p) { time.push(p.getTime());
+                            gyr.push(p.getGYR());
+                            acc.push(p.getACC());
+                            mag.push(p.getMAG());
+                            alt.push(p.getALT());
+                            temp.push(p.getTEMP()); }
+
+   int* getMAG() {int* temp = mag.front(); 
+                  mag.pop(); 
+                  return temp; }
+   int* getGYR() {int* temp = gyr.front(); 
+                  gyr.pop(); 
+                  return temp; }
+   int* getACC() {int* temp = acc.front(); 
+                  acc.pop(); 
+                  return temp; }
+   int getTime() {int temp = time.front(); 
+                  time.pop(); 
+                  return temp; }
+   float getALT() {float temp = alt.front(); 
+                  alt.pop(); 
+                  return temp; }
+   double* getTEMP() {double* temp = this->temp.front();
+                      this->temp.pop();
+                      return temp;}
+   
+   void loadTestData(char* fileName)
+   {
+      std::ofstream fout;
+      fout.open(fileName);
+      std::stringstream buffer;
+      while(fout)
+      {
+         // TODO: Read from .csv file and load values into queues
+      }
+      fout.close();
+   }
+};
+
+// extern variable located in flight.h file
+extern SimData simData;
+
 // Functions
 void close(int fd);
 void enableIMU();
