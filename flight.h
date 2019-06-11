@@ -58,6 +58,7 @@
    #include "./simLibs/wiringPi.h"
    #include "./simLibs/sensorBMPSim.h"
    #define SIM
+   SimData simData;
 #else
      #include <wiringPi.h>
      extern "C" {
@@ -147,6 +148,8 @@ void logData();
 #ifdef SIM
 int main()
 {
+   char *fileName;
+   simData.loadTestData(fileName);
    flightProgram();
    return 0;
 }
