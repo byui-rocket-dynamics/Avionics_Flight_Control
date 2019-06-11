@@ -126,6 +126,7 @@ void *collectData(void* p)
       data.alt = getAltitude(fd);
       
       // TODO: Save data to file here
+      // Format: "<time>, <gyr>, <mag>, <alt>\n"
 
    }
    // TODO: Close file here
