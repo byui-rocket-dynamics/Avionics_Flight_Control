@@ -148,9 +148,9 @@ void logData();
 #ifdef SIM
 int main()
 {
-   char *fileName;
+   char *fileName = "./testData/fakeTestData.csv";
    simData.loadTestData(fileName);
-   flightProgram();
+   // flightProgram();
    return 0;
 }
 #else
