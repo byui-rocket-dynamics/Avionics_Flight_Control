@@ -1,6 +1,19 @@
 # Avionics_Flight_Control
 The software here is made to read sensors, analyze data, and deploy the parachute on the BYUI Rocket.
 
+## How to compile via Linux ##
+There are two ways to compile.
+
+The following is for compiling on the raspberry pi for the actual launch program.
+~~~
+make launch
+~~~
+
+The following is for compiling for testing on both the raspberry pi and any computer
+~~~
+make sim TYPE='SIMULATION'
+~~~
+
 ## What Needs To Be Done ##
 *If you complete one of these tasks, please mark it off and move it to the bottom of the list. If you are currently working on one of these, add your github username, surrounded by astrisks, after the task and remove it when it is done. Be sure to commit the README file with the claimed and the commit message "Claimed Task" BEFORE you start working on the task.*
 - [ ] Logic for deploying drogue chute
