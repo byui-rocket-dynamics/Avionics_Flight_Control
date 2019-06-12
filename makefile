@@ -14,12 +14,10 @@ LAUNCH_PATH = ./sensorCode/
 
 TYPE = LAUNCH
 
-# BUILD LAUNCH PROG
+# BUILD SIMULATION LAUNCH PROG
 sim: wiringPi.o sensorBMPSim.o flight.o
 	g++ -o sim wiringPi.o sensorBMPSim.o flight.o $(CFLAGS)
 
-launch: main.o flight.o
-	g++ -o launch main.o flight.o $(CFLAGS)
 	 
 # FILES
 wiringPi.o: $(SIM_PATH)wiringPi.h $(SIM_PATH)wiringPi.cpp
@@ -34,3 +32,8 @@ flight.o: flight.h flight.cpp
 # RULES
 clean:
 	rm sim launch *.o
+
+
+# BUILDING THE LAUNCH PROGRAM
+launch: 
+	g++ -o launch flight.o -pthread
