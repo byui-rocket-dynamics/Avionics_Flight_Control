@@ -1,2 +1,2 @@
-Time, GyrX, GyrY , GyrZ , Mag, Alt, Temp
-00:00:00.0, 20, 30, 40, 10, 1005.42, 30.04
+Time, GYRx, GYRy, GYRz, MAG, ACC, ALT, TEMP,
+000, 20, 30, 40, 10, 1005.42, 30.04
