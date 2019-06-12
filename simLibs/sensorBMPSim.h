@@ -14,6 +14,7 @@
  * *********************************************/
 
 #include <queue>
+#include <vector>
 #include <fstream>
 #include <string>
 #include <sstream>
@@ -89,14 +90,39 @@ public:
    {
       std::fstream fin;
       fin.open(fileName);
+      std::vector<std::string> rowData; // Data located in a row in the .csv file
       std::string str, row;
       while(fin >> str)
       {
          row.clear();
          getline(fin, row);
          std::stringstream buffer(row);
-         int temp = 0;
-         //TODO: Continue by filling variables with data in stringstream
+         std::string temp;
+         while(getline(buffer, temp, ','))
+         {
+            temp.erase(temp.begin());
+            rowData.push_back(temp);
+         }
+         if(rowData[0] != "Time")
+         {
+            try{
+            this->time.push(std::stoi(rowData[0]));
+            int tempGYR[3];
+            tempGYR[0] = std::stoi(rowData[1]);
+            tempGYR[1] = std::stoi(rowData[2]);
+            tempGYR[2] = std::stoi(rowData[3]);
+            this->gyr.push(tempGYR);
+            int tempVar[1];
+            tempVar[0] = std::stoi(rowData[4]);
+            this->mag.push(tempVar);
+            this->alt.push(std::stof(rowData[5]));
+            double tempVar2[1];
+            // TODO: This causes a segfault, make it not do that.
+            // tempVar2[0] = std::stod(rowData[6]);
+            // this->temp.push(tempVar2);
+            }
+            catch(const std::invalid_argument& arg){}
+         }
       }
       fin.close();
    }
