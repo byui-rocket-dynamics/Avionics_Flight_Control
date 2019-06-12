@@ -87,14 +87,18 @@ public:
    
    void loadTestData(char* fileName)
    {
-      std::ofstream fout;
-      fout.open(fileName);
-      std::stringstream buffer;
-      while(fout)
+      std::fstream fin;
+      fin.open(fileName);
+      std::string str, row;
+      while(fin >> str)
       {
-         // TODO: Read from .csv file and load values into queues
+         row.clear();
+         getline(fin, row);
+         std::stringstream buffer(row);
+         int temp = 0;
+         //TODO: Continue by filling variables with data in stringstream
       }
-      fout.close();
+      fin.close();
    }
 };
 
