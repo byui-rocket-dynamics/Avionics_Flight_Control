@@ -162,6 +162,7 @@ void log(char* tag, char* message)
  * ******************************************/
 void flightProgram()
 {
+   log("i", "Program Started");
    start();
 
    // So we don't accidently deploy chutes too early
@@ -180,7 +181,10 @@ void flightProgram()
  * ******************************************/
 void deployDrogue()
 {
+   log("i", "Starting deployDrogue()");
    // TODO: Write logic
+
+   log("i", "Drogue parachute deployed");
 }
 
 /********************************************
@@ -189,7 +193,10 @@ void deployDrogue()
  * ******************************************/
 void deployMain()
 {
+   log("i", "Starting deployMain()");
    // TODO: Write logic
+
+   log("i", "Main parachute deployed");
 }
 
 /********************************************
@@ -198,5 +205,8 @@ void deployMain()
  * ******************************************/
 void land()
 {
+   log("i", "Starting land()");
    // TODO: Write logic
+
+   log("i", "Landed");
 }

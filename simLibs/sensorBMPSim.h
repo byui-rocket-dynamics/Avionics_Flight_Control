@@ -100,7 +100,8 @@ public:
          std::string temp;
          while(getline(buffer, temp, ','))
          {
-            temp.erase(temp.begin());
+            if(temp[0] == ' ')
+               temp.erase(temp.begin());
             rowData.push_back(temp);
          }
          if(rowData[0] != "Time")
@@ -121,7 +122,9 @@ public:
             // tempVar2[0] = std::stod(rowData[6]);
             // this->temp.push(tempVar2);
             }
-            catch(const std::invalid_argument& arg){}
+            catch(const std::invalid_argument& arg){
+               printf("ERROR: Unable to parse data correctly!\n");
+            }
          }
       }
       fin.close();
