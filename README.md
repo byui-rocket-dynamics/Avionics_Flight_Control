@@ -20,7 +20,7 @@ make sim TYPE='SIMULATION'
 - [ ] Logic for deploying main chute
 - [ ] Logic for knowing when rocket is on the ground
 - [ ] Logic for saving the data to a file in collectData()
-- [ ] Logic for saving data in the logs queue to a file in logData()
+- [ ] Logic for saving data in the logs queue to a file in logData() - *philkkw*
 - [ ] Logic for pushing data into the logs queue in log()
 - [ ] Logic for saving the flight summary in saveSummary()
 - [ ] Logic for updating flight summary variables (and figure out best place to do that)
